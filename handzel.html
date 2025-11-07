@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<title>QR</title>
+<script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.1/build/qrcode.min.js"></script>
+
+<body>
+<h3>Generator LUDOMIRA HANDZLA</h3>
+
+<label>PRZYSTANEK</label><br>
+<input id="p" maxlength="30"><br><br>
+
+<label>STANOWISKO</label><br>
+<input id="s" type="number" min="0" max="99"><br><br>
+
+<label>NUMER TABOROWY</label><br>
+<input id="b" type="number" min="0" max="999"><br><br>
+
+<label>LINIA</label><br>
+<input id="l" type="number" min="0" max="999"><br><br>
+
+<button id="g">Generuj</button>
+
+<pre id="r">—</pre>
+<div id="q"></div>
+
+<script>
+g.onclick=async()=>{
+  let P=p.value.trim(),S=s.value,B=b.value,L=l.value;
+  if(!P)return alert("Brak nazwy przystanku");
+  S=S.padStart(2,0);B=B.padStart(3,0);L=L.padStart(3,0);
+  let str=`${P}, ST.${S}, B ${B}, L ${L}`;
+  r.textContent=str;
+  q.innerHTML="";
+  let c=document.createElement("canvas");
+  await QRCode.toCanvas(c,str,{width:150,margin:1});
+  q.append(c);
+}
+</script>
+</body>
+</html>
